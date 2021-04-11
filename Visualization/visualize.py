@@ -352,7 +352,7 @@ def open_file_xyz(filepath):
         vis.destroy_window()
     vis = o3.visualization.Visualizer()
     source = o3.io.read_point_cloud(filename = str(filepath),format = "xyz")
-    source.paint_uniform_color([0.4,0.4,0.4])
+    source.paint_uniform_color([0.8,0.8,0.8])
     custom_draw_geometry(source)
 
 def open_file_heat(filepath):
@@ -432,6 +432,65 @@ def draw_pre_feature(filepath):
     source = o3.io.read_point_cloud(filename = str(filepath),format = "xyzrgb")
     custom_draw_geometry(source)
 
+def duplif(ncent , cent_points):
+    cent_eh = np.zeros(shape = (ncent * 24 , 6))
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + i*ncent][0] = cent_points[j][0]
+            cent_eh[j + i*ncent][1] = cent_points[j][1]
+            cent_eh[j + i*ncent][2] = cent_points[j][2]
+            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + i*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (3 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
+            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
+            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
+            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (6 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
+            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
+            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
+            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + (9 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (12 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (15 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
+            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
+            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
+            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (18 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
+            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
+            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
+            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (21 + i)*ncent][3] = 1
+    return cent_eh
 
 def draw_feature(filepath , featfilepath):
     '''
@@ -494,7 +553,9 @@ def draw_feature(filepath , featfilepath):
         # r[0] = 1
         r[2] = 1
     featlist = np.hstack((featlist , rgb))
+    cent_eh = duplif(n , featlist)
     point_set = np.vstack((point_set , featlist))
+    point_set = np.vstack((point_set , cent_eh))
     np.savetxt(filepathW , point_set)
 
     source = o3.io.read_point_cloud(filename = str(filepathW),format = "xyzrgb")
@@ -691,6 +752,66 @@ def kmeans(dataSet, k):
 #     np.savetxt('testkmeanCO.txt',cent)
 #     np.savetxt('Visualization/pred_data/' + name + '-PredCO.txt',point_set)
 
+def dupli(ncent , cent_points):
+    cent_eh = np.zeros(shape = (ncent * 24 , 6))
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + i*ncent][0] = cent_points[j][0]
+            cent_eh[j + i*ncent][1] = cent_points[j][1]
+            cent_eh[j + i*ncent][2] = cent_points[j][2]
+            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + i*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (3 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
+            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
+            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
+            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (6 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
+            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
+            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
+            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + (9 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (12 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (15 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
+            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
+            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
+            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (18 + i)*ncent][5] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
+            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
+            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
+            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (21 + i)*ncent][5] = 1
+    return cent_eh
+
 def calfeatCO(name):
     '''
     带入segment信息进行分割
@@ -698,7 +819,7 @@ def calfeatCO(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.20:
+        if p[3] > 0.19:
             seg = int(p[4])
             if seg in segdict.keys():
                 segdict[seg].append(p)
@@ -729,11 +850,15 @@ def calfeatCO(name):
     N =point_set.shape[0]
     rgb = np.zeros(shape = (N , 3))
     for r in rgb:
-        r[0] = 0.4
-        r[1] = 0.4
-        r[2] = 0.4
+        r[0] = 0.8
+        r[1] = 0.8
+        r[2] = 0.8
     point_set = np.hstack((point_set , rgb))
+
+    ncent = cent_points.shape[0]
+    cent_eh = dupli(ncent , cent_points)
     point_set = np.vstack((point_set, cent_points))
+    point_set = np.vstack((point_set, cent_eh))
     # np.savetxt('testkmeanCO.txt',cent_points)
     np.savetxt('Visualization/pred_data/' + name + '-PredCO.txt',point_set)
 
@@ -842,11 +967,15 @@ def calfeatCU(name):
     N =point_set.shape[0]
     rgb = np.zeros(shape = (N , 3))
     for r in rgb:
-        r[0] = 0.4
-        r[1] = 0.4
-        r[2] = 0.4
+        r[0] = 0.8
+        r[1] = 0.8
+        r[2] = 0.8
     point_set = np.hstack((point_set , rgb))
+
+    ncent = cent_points.shape[0]
+    cent_eh = dupli(ncent , cent_points)
     point_set = np.vstack((point_set, cent_points))
+    point_set = np.vstack((point_set, cent_eh))
     np.savetxt('Visualization/pred_data/' + name + '-PredCU.txt',point_set)
 
 # def calfeatFA(name):
@@ -947,10 +1076,15 @@ def calfeatFA(name):
     N =point_set.shape[0]
     rgb = np.zeros(shape = (N , 3))
     for r in rgb:
-        r[0] = 0.4
-        r[1] = 0.4
-        r[2] = 0.4
+        r[0] = 0.8
+        r[1] = 0.8
+        r[2] = 0.8
     point_set = np.hstack((point_set , rgb))
+
+    ncent = cent_points.shape[0]
+    cent_eh = dupli(ncent , cent_points)
+    point_set = np.vstack((point_set, cent_points))
+    point_set = np.vstack((point_set, cent_eh))
     point_set = np.vstack((point_set, cent_points))
 
     np.savetxt('Visualization/pred_data/' + name + '-PredFA.txt',point_set)
@@ -1030,7 +1164,7 @@ def calfeatOC(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-OC.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.24:
+        if p[3] > 0.23:
             seg = int(p[4])
             if seg in segdict.keys():
                 segdict[seg].append(p)
@@ -1061,10 +1195,15 @@ def calfeatOC(name):
     N =point_set.shape[0]
     rgb = np.zeros(shape = (N , 3))
     for r in rgb:
-        r[0] = 0.4
-        r[1] = 0.4
-        r[2] = 0.4
+        r[0] = 0.8
+        r[1] = 0.8
+        r[2] = 0.8
     point_set = np.hstack((point_set , rgb))
+
+    ncent = cent_points.shape[0]
+    cent_eh = dupli(ncent , cent_points)
+    point_set = np.vstack((point_set, cent_points))
+    point_set = np.vstack((point_set, cent_eh))
     point_set = np.vstack((point_set, cent_points))
     np.savetxt('Visualization/pred_data/' + name + '-PredOC.txt',point_set)
 
@@ -1420,6 +1559,8 @@ def checkfeat():
                     pre_mutex = 0
                     heat_mutex = 0
                     feat_mutex = 0
+                    mutex = 0
+                    pv = 0
                     ui.timer4.stop()
                     ui.textEdit.append(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' : Success!!!')
                     ui.progressBar.setValue(100)

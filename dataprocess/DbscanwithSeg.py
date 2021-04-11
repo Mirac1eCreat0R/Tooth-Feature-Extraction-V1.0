@@ -113,7 +113,7 @@ def calfeatCO(name):
     '''
     带入segment信息进行分割
     '''
-    point_set = np.loadtxt('Visualization/pred_data/'+ name + '.txt')
+    point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
     segdict = {}
     for p in point_set:
         if p[3] > 0.20:
@@ -139,7 +139,7 @@ def calfeatCO(name):
     
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[1] = 1
+            r[0] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -152,6 +152,68 @@ def calfeatCO(name):
         r[2] = 0.5
     point_set = np.hstack((point_set , rgb))
     point_set = np.vstack((point_set, cent_points))
+
+    ncent = cent_points.shape[0]
+    cent_eh = np.zeros(shape = (ncent * 24 , 6))
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + i*ncent][0] = cent_points[j][0]
+            cent_eh[j + i*ncent][1] = cent_points[j][1]
+            cent_eh[j + i*ncent][2] = cent_points[j][2]
+            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + i*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (3 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
+            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
+            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
+            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
+            cent_eh[j + (6 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
+            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
+            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
+            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
+            cent_eh[j + (9 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (12 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (15 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
+            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
+            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
+            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
+            cent_eh[j + (18 + i)*ncent][3] = 1
+    for i in range(3):
+        for j in range(len(cent_points)):
+            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
+            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
+            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
+            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
+            cent_eh[j + (21 + i)*ncent][3] = 1
+    point_set = np.vstack((point_set, cent_points))
+    point_set = np.vstack((point_set, cent_eh))
+
     np.savetxt('testkmeanCO.txt',cent_points)
     np.savetxt(name + '-PredCO.txt',point_set)
 
@@ -397,5 +459,5 @@ def gt(name , feature):
 #     np.savetxt(name + '-PredCO.txt',point_set)
 
 if __name__ == '__main__':
-    calfeatOC('model_1')
+    calfeatCO('model_1')
     gt('model_1' , 3)
