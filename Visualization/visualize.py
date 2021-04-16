@@ -433,64 +433,77 @@ def draw_pre_feature(filepath):
     custom_draw_geometry(source)
 
 def duplif(ncent , cent_points):
-    cent_eh = np.zeros(shape = (ncent * 24 , 6))
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + i*ncent][0] = cent_points[j][0]
-            cent_eh[j + i*ncent][1] = cent_points[j][1]
-            cent_eh[j + i*ncent][2] = cent_points[j][2]
-            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + i*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (3 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
-            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
-            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
-            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (6 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
-            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
-            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
-            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + (9 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
-            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
-            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
-            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (12 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (15 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
-            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
-            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
-            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (18 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
-            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
-            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
-            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (21 + i)*ncent][3] = 1
-    return cent_eh
+    cent_eh = []
+    for point in cent_points:
+        x,y,z = point[0:3]
+        sx = x - 0.15
+        sy = y - 0.15
+        sz = z - 0.15
+        for i in range(5):
+            tx = sx + i * 0.06
+            for j in range(5):
+                ty = sy + j * 0.06
+                for k in range(5):
+                    tz = sz + k * 0.06
+                    cent_eh.append([tx,ty,tz,1,0,0])
+    return np.array(cent_eh)
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + i*ncent][0] = cent_points[j][0]
+    #         cent_eh[j + i*ncent][1] = cent_points[j][1]
+    #         cent_eh[j + i*ncent][2] = cent_points[j][2]
+    #         cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
+    #         cent_eh[j + i*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+    #         cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+    #         cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+    #         cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.07
+    #         cent_eh[j + (3 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.07
+    #         cent_eh[j + (6 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.07
+    #         cent_eh[j + (9 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+    #         cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+    #         cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+    #         cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.03
+    #         cent_eh[j + (12 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+    #         cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+    #         cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+    #         cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.03
+    #         cent_eh[j + (15 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.03
+    #         cent_eh[j + (18 + i)*ncent][3] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.03
+    #         cent_eh[j + (21 + i)*ncent][3] = 1
+    # return cent_eh
 
 def draw_feature(filepath , featfilepath):
     '''
@@ -550,8 +563,8 @@ def draw_feature(filepath , featfilepath):
     rgb = np.zeros(shape = (n , 3))
     #实际特征点颜色
     for r in rgb:
-        # r[0] = 1
-        r[2] = 1
+        r[0] = 1
+        # r[2] = 1
     featlist = np.hstack((featlist , rgb))
     cent_eh = duplif(n , featlist)
     point_set = np.vstack((point_set , featlist))
@@ -693,124 +706,94 @@ def kmeans(dataSet, k):
         
     return centroids, cluster
 
-# def calfeatCO(name):
-#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '.txt')
-#     new_points = []
-#     for p in point_set:
-#         if p[3] > 0.37:
-#             new_points.append(p)
-
-#     c = dbscan(new_points, 1, 3)
-#     idx = []
-#     for i in range(len(c)):
-#         if c[i] != -1:
-#             idx.append(i)
-#     c = np.array(c)
-#     c = c[idx]
-#     new_points = np.array(new_points)
-#     new_points = new_points[idx,:]
-#     new_points = new_points[:, 0:3]
-#     n = len(c)
-#     k = np.max(c)+1
-#     rgb = np.zeros(shape = (n , 3))
-#     for i in range(n):
-#         seg = c[i]
-#         rgb[i][0] = 1 - 1 * seg/k
-#         rgb[i][1] = 0
-#         rgb[i][2] = 0
-#     new_points = np.hstack((new_points,rgb))
-#     print(k)
-#     np.savetxt('testdbscanCO.txt',new_points)
-
-#     kpoints = [] #将点按聚类分成k类
-#     for i in range(k): 
-#         p = []
-#         kpoints.append(p)
-#     for i in range(n):
-#         kpoints[c[i]].append(new_points[i][0:3])
-
-#     cent = []
-#     for kp in kpoints: #对每一类的全部点使用kmeans求一个聚类中心
-#         centroids,_ = kmeans(kp, 1)
-#         cent.append(centroids)
-#     cent = np.array(cent)
-#     cent = cent.reshape(k,-1)
-    
-#     rgb = np.zeros(shape = (k , 3))
-#     for r in rgb:
-#         r[1] = 1
-#     cent = np.hstack((cent , rgb))
-#     point_set = point_set[:,0:3]
-#     N =point_set.shape[0]
-#     rgb = np.zeros(shape = (N , 3))
-#     for r in rgb:
-#         r[0] = 0.5
-#         r[1] = 0.5
-#         r[2] = 0.5
-#     point_set = np.hstack((point_set , rgb))
-#     point_set = np.vstack((point_set,cent))
-#     np.savetxt('testkmeanCO.txt',cent)
-#     np.savetxt('Visualization/pred_data/' + name + '-PredCO.txt',point_set)
-
 def dupli(ncent , cent_points):
-    cent_eh = np.zeros(shape = (ncent * 24 , 6))
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + i*ncent][0] = cent_points[j][0]
-            cent_eh[j + i*ncent][1] = cent_points[j][1]
-            cent_eh[j + i*ncent][2] = cent_points[j][2]
-            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + i*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (3 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
-            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
-            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
-            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (6 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
-            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
-            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
-            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + (9 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
-            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
-            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
-            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (12 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (15 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
-            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
-            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
-            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (18 + i)*ncent][5] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
-            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
-            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
-            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (21 + i)*ncent][5] = 1
-    return cent_eh
+    cent_eh = []
+    for point in cent_points:
+        x,y,z = point[0:3]
+        sx = x - 0.15
+        sy = y - 0.15
+        sz = z - 0.15
+        for i in range(10):
+            tx = sx + i * 0.03
+            for j in range(10):
+                ty = sy + j * 0.03
+                for k in range(10):
+                    tz = sz + k * 0.03
+                    cent_eh.append([tx,ty,tz,0,0,1])
+    return np.array(cent_eh)
+    # cent_eh = np.zeros(shape = (ncent * 24 , 6))
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + i*ncent][0] = cent_points[j][0]
+    #         cent_eh[j + i*ncent][1] = cent_points[j][1]
+    #         cent_eh[j + i*ncent][2] = cent_points[j][2]
+    #         cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.07
+    #         cent_eh[j + i*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+    #         cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+    #         cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+    #         cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.07
+    #         cent_eh[j + (3 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.07
+    #         cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.07
+    #         cent_eh[j + (6 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.07
+    #         cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.07
+    #         cent_eh[j + (9 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+    #         cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+    #         cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+    #         cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.03
+    #         cent_eh[j + (12 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+    #         cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+    #         cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+    #         cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.03
+    #         cent_eh[j + (15 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.03
+    #         cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.03
+    #         cent_eh[j + (18 + i)*ncent][5] = 1
+    # for i in range(3):
+    #     for j in range(len(cent_points)):
+    #         cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.03
+    #         cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.03
+    #         cent_eh[j + (21 + i)*ncent][5] = 1
+    # return cent_eh
+
+def closestPoint(point , point_set):
+    n = point_set.shape[0]
+    point = point.reshape(-1,3)
+    cent = np.empty(shape=(0,3))
+    for p in point:
+        p = p.reshape(-1,3)
+        p = np.repeat(p, n , axis=0)   
+        dis = (point_set - p) * (point_set - p)
+        dis = np.sum(dis , axis=1)
+        dis = np.sqrt(dis)
+        i = np.argmin(dis)
+        cent_p = point_set[i]
+        cent = np.vstack((cent,cent_p))
+    return cent
 
 def calfeatCO(name):
     '''
@@ -819,30 +802,27 @@ def calfeatCO(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.19:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
-
-        cent,_ = kmeans(new_points[:, 0:3], 2)
+        cent,_ = kmeans(new_points, 2)
         cent = np.array(cent)
+        cent = closestPoint(cent , new_points)
     
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[0] = 1
+            r[2] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -859,68 +839,59 @@ def calfeatCO(name):
     cent_eh = dupli(ncent , cent_points)
     point_set = np.vstack((point_set, cent_points))
     point_set = np.vstack((point_set, cent_eh))
-    # np.savetxt('testkmeanCO.txt',cent_points)
+
+    np.savetxt('Visualization/pred_data/' + name + '-featPointCO.txt',cent_points)
     np.savetxt('Visualization/pred_data/' + name + '-PredCO.txt',point_set)
 
-# def calfeatCU(name):
-#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '.txt')
-#     new_points = []
+# def calfeatCO(name):
+#     '''
+#     带入segment信息进行分割
+#     '''
+#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
+#     segdict = {}
 #     for p in point_set:
-#         if p[4] > 0.37:
-#             new_points.append(p)
+#         if p[3] > 0.19:
+#             seg = int(p[4])
+#             if seg in segdict.keys():
+#                 segdict[seg].append(p)
+#             else:
+#                 segdict[seg] = []
+#                 segdict[seg].append(p)
 
-#     c = dbscan(new_points, 1, 3)
-#     idx = []
-#     for i in range(len(c)):
-#         if c[i] != -1:
-#             idx.append(i)
-#     c = np.array(c)
-#     c = c[idx]
-#     new_points = np.array(new_points)
-#     new_points = new_points[idx,:]
-#     new_points = new_points[:, 0:3]
-#     n = len(c)
-#     k = np.max(c)+1
-#     rgb = np.zeros(shape = (n , 3))
-#     for i in range(n):
-#         seg = c[i]
-#         rgb[i][0] = 1 - 1 * seg/k
-#         rgb[i][1] = 0
-#         rgb[i][2] = 0
-#     new_points = np.hstack((new_points,rgb))
+#     cent_points = np.empty(shape = (0 , 6))
+#     for key in segdict.keys():
+#         v = segdict[key]
+#         new_points = np.array(v)
+#         new_points = new_points[:, 0:3]
 
-#     print(k)
-#     np.savetxt('testdbscanCU.txt',new_points)
+#         n = new_points.shape[0]
+#         rgb = np.zeros(shape = (n , 3))
+#         new_points = np.hstack((new_points,rgb))
 
-#     kpoints = [] #将点按聚类分成k类
-#     for i in range(k): 
-#         p = []
-#         kpoints.append(p)
-#     for i in range(n):
-#         kpoints[c[i]].append(new_points[i][0:3])
-
-#     cent = []
-#     for kp in kpoints: #对每一类的全部点使用kmeans求一个聚类中心
-#         centroids,_ = kmeans(kp, 1)
-#         cent.append(centroids)
-#     cent = np.array(cent)
-#     cent = cent.reshape(k,-1)
+#         cent,_ = kmeans(new_points[:, 0:3], 2)
+#         cent = np.array(cent)
     
-#     rgb = np.zeros(shape = (k , 3))
-#     for r in rgb:
-#         r[1] = 1
-#     cent = np.hstack((cent , rgb))
+#         rgb = np.zeros(shape = (cent.shape[0] , 3))
+#         for r in rgb:
+#             r[0] = 1
+#         cent = np.hstack((cent , rgb))
+#         cent_points = np.vstack((cent_points , cent))
+        
 #     point_set = point_set[:,0:3]
 #     N =point_set.shape[0]
 #     rgb = np.zeros(shape = (N , 3))
 #     for r in rgb:
-#         r[0] = 0.5
-#         r[1] = 0.5
-#         r[2] = 0.5
+#         r[0] = 0.8
+#         r[1] = 0.8
+#         r[2] = 0.8
 #     point_set = np.hstack((point_set , rgb))
-#     point_set = np.vstack((point_set,cent))
-#     np.savetxt('testkmeanCU.txt',cent)
-#     np.savetxt('Visualization/pred_data/' + name + '-PredCU.txt',point_set)
+
+#     ncent = cent_points.shape[0]
+#     cent_eh = dupli(ncent , cent_points)
+#     point_set = np.vstack((point_set, cent_points))
+#     point_set = np.vstack((point_set, cent_eh))
+#     # np.savetxt('testkmeanCO.txt',cent_points)
+#     np.savetxt('Visualization/pred_data/' + name + '-PredCO.txt',point_set)
 
 def calfeatCU(name):
     '''
@@ -929,37 +900,34 @@ def calfeatCU(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CU.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.25:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
-
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
         if key in [11,12,21,22]:
-            cent,_ = kmeans(new_points[:, 0:3], 3)
+            cent,_ = kmeans(new_points, 3)
         if key in [13,23]:
-            cent,_ = kmeans(new_points[:, 0:3], 1)
+            cent,_ = kmeans(new_points, 1)
         if key in [14,15,24,25]:
-            cent,_ = kmeans(new_points[:, 0:3], 2)
+            cent,_ = kmeans(new_points, 2)
         if key in [16,17,26,27]:
-            cent,_ = kmeans(new_points[:, 0:3], 4)
+            cent,_ = kmeans(new_points, 4)
         cent = np.array(cent)
-    
+        cent = closestPoint(cent , new_points)
+
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[0] = 1
+            r[2] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -976,68 +944,64 @@ def calfeatCU(name):
     cent_eh = dupli(ncent , cent_points)
     point_set = np.vstack((point_set, cent_points))
     point_set = np.vstack((point_set, cent_eh))
+    np.savetxt('Visualization/pred_data/' + name + '-featPointCU.txt',cent_points)
     np.savetxt('Visualization/pred_data/' + name + '-PredCU.txt',point_set)
 
-# def calfeatFA(name):
-#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '.txt')
-#     new_points = []
+# def calfeatCU(name):
+#     '''
+#     带入segment信息进行分割
+#     '''
+#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CU.txt')
+#     segdict = {}
 #     for p in point_set:
-#         if p[5] > 0.37:
-#             new_points.append(p)
+#         if p[3] > 0.25:
+#             seg = int(p[4])
+#             if seg in segdict.keys():
+#                 segdict[seg].append(p)
+#             else:
+#                 segdict[seg] = []
+#                 segdict[seg].append(p)
 
-#     c = dbscan(new_points, 1, 3)
-#     idx = []
-#     for i in range(len(c)):
-#         if c[i] != -1:
-#             idx.append(i)
-#     c = np.array(c)
-#     c = c[idx]
-#     new_points = np.array(new_points)
-#     new_points = new_points[idx,:]
-#     new_points = new_points[:, 0:3]
-#     n = len(c)
-#     k = np.max(c)+1
-#     rgb = np.zeros(shape = (n , 3))
-#     for i in range(n):
-#         seg = c[i]
-#         rgb[i][0] = 1 - 1 * seg/k
-#         rgb[i][1] = 0
-#         rgb[i][2] = 0
-#     new_points = np.hstack((new_points,rgb))
+#     cent_points = np.empty(shape = (0 , 6))
+#     for key in segdict.keys():
+#         v = segdict[key]
+#         new_points = np.array(v)
+#         new_points = new_points[:, 0:3]
 
-#     print(k)
-#     np.savetxt('testdbscanFA.txt',new_points)
+#         n = new_points.shape[0]
+#         rgb = np.zeros(shape = (n , 3))
+#         new_points = np.hstack((new_points,rgb))
 
-#     kpoints = [] #将点按聚类分成k类
-#     for i in range(k): 
-#         p = []
-#         kpoints.append(p)
-#     for i in range(n):
-#         kpoints[c[i]].append(new_points[i][0:3])
-
-#     cent = []
-#     for kp in kpoints: #对每一类的全部点使用kmeans求一个聚类中心
-#         centroids,_ = kmeans(kp, 1)
-#         cent.append(centroids)
-#     cent = np.array(cent)
-#     cent = cent.reshape(k,-1)
+#         if key in [11,12,21,22]:
+#             cent,_ = kmeans(new_points[:, 0:3], 3)
+#         if key in [13,23]:
+#             cent,_ = kmeans(new_points[:, 0:3], 1)
+#         if key in [14,15,24,25]:
+#             cent,_ = kmeans(new_points[:, 0:3], 2)
+#         if key in [16,17,26,27]:
+#             cent,_ = kmeans(new_points[:, 0:3], 4)
+#         cent = np.array(cent)
     
-#     rgb = np.zeros(shape = (k , 3))
-#     for r in rgb:
-#         r[1] = 1
-#     cent = np.hstack((cent , rgb))
+#         rgb = np.zeros(shape = (cent.shape[0] , 3))
+#         for r in rgb:
+#             r[0] = 1
+#         cent = np.hstack((cent , rgb))
+#         cent_points = np.vstack((cent_points , cent))
+        
 #     point_set = point_set[:,0:3]
 #     N =point_set.shape[0]
 #     rgb = np.zeros(shape = (N , 3))
 #     for r in rgb:
-#         r[0] = 0.5
-#         r[1] = 0.5
-#         r[2] = 0.5
+#         r[0] = 0.8
+#         r[1] = 0.8
+#         r[2] = 0.8
 #     point_set = np.hstack((point_set , rgb))
-#     point_set = np.vstack((point_set,cent))
-#     np.savetxt('testkmeanFA.txt',cent)
-#     np.savetxt('Visualization/pred_data/' + name + '-PredFA.txt',point_set)
 
+#     ncent = cent_points.shape[0]
+#     cent_eh = dupli(ncent , cent_points)
+#     point_set = np.vstack((point_set, cent_points))
+#     point_set = np.vstack((point_set, cent_eh))
+#     np.savetxt('Visualization/pred_data/' + name + '-PredCU.txt',point_set)
 def calfeatFA(name):
     '''
     带入segment信息进行分割
@@ -1045,30 +1009,27 @@ def calfeatFA(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-FA.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.155:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
-
-        cent,_ = kmeans(new_points[:, 0:3], 1)
+        cent,_ = kmeans(new_points, 1)
         cent = np.array(cent)
+        cent = closestPoint(cent , new_points)
     
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[0] = 1
+            r[2] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -1087,75 +1048,59 @@ def calfeatFA(name):
     point_set = np.vstack((point_set, cent_eh))
     point_set = np.vstack((point_set, cent_points))
 
+    np.savetxt('Visualization/pred_data/' + name + '-featPointFA.txt',cent_points)
     np.savetxt('Visualization/pred_data/' + name + '-PredFA.txt',point_set)
 
-# def calfeatOC(name):
-#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '.txt')
-#     new_points = []
+# def calfeatFA(name):
+#     '''
+#     带入segment信息进行分割
+#     '''
+#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-FA.txt')
+#     segdict = {}
 #     for p in point_set:
-#         if p[6] > 0.37:
-#             new_points.append(p)
+#         if p[3] > 0.155:
+#             seg = int(p[4])
+#             if seg in segdict.keys():
+#                 segdict[seg].append(p)
+#             else:
+#                 segdict[seg] = []
+#                 segdict[seg].append(p)
 
-#     c = dbscan(new_points, 1, 3)
-#     idx = []
-#     for i in range(len(c)):
-#         if c[i] != -1:
-#             idx.append(i)
-#     c = np.array(c)
-#     c = c[idx]
-#     new_points = np.array(new_points)
-#     new_points = new_points[idx,:]
-#     new_points = new_points[:, 0:3]
-#     n = len(c)
-#     k = np.max(c)+1
-#     rgb = np.zeros(shape = (n , 3))
-#     for i in range(n):
-#         seg = c[i]
-#         rgb[i][0] = 1 - 1 * seg/k
-#         rgb[i][1] = 0
-#         rgb[i][2] = 0
-#     new_points = np.hstack((new_points,rgb))
+#     cent_points = np.empty(shape = (0 , 6))
+#     for key in segdict.keys():
+#         v = segdict[key]
+#         new_points = np.array(v)
+#         new_points = new_points[:, 0:3]
 
-#     print(k)
-#     np.savetxt('testdbscanOC.txt',new_points)
-#     # cent = np.zeros(shape = (14 , 6))
-#     # for i in range(n):
-#     #     cent[c[i]] += new_points[i]
-#     # cent = cent/14
-#     # for p in cent:
-#     #     p[3] = 255
-#     # new_points = np.vstack((new_points, cent))
-#     # np.savetxt('testdbscanMean.txt',new_points)
+#         n = new_points.shape[0]
+#         rgb = np.zeros(shape = (n , 3))
+#         new_points = np.hstack((new_points,rgb))
 
-#     kpoints = [] #将点按聚类分成k类
-#     for i in range(k): 
-#         p = []
-#         kpoints.append(p)
-#     for i in range(n):
-#         kpoints[c[i]].append(new_points[i][0:3])
-
-#     cent = []
-#     for kp in kpoints: #对每一类的全部点使用kmeans求一个聚类中心
-#         centroids,_ = kmeans(kp, 1)
-#         cent.append(centroids)
-#     cent = np.array(cent)
-#     cent = cent.reshape(k,-1)
+#         cent,_ = kmeans(new_points[:, 0:3], 1)
+#         cent = np.array(cent)
     
-#     rgb = np.zeros(shape = (k , 3))
-#     for r in rgb:
-#         r[1] = 1
-#     cent = np.hstack((cent , rgb))
+#         rgb = np.zeros(shape = (cent.shape[0] , 3))
+#         for r in rgb:
+#             r[0] = 1
+#         cent = np.hstack((cent , rgb))
+#         cent_points = np.vstack((cent_points , cent))
+        
 #     point_set = point_set[:,0:3]
 #     N =point_set.shape[0]
 #     rgb = np.zeros(shape = (N , 3))
 #     for r in rgb:
-#         r[0] = 0.5
-#         r[1] = 0.5
-#         r[2] = 0.5
+#         r[0] = 0.8
+#         r[1] = 0.8
+#         r[2] = 0.8
 #     point_set = np.hstack((point_set , rgb))
-#     point_set = np.vstack((point_set,cent))
-#     np.savetxt('testkmeanOC.txt',cent)
-#     np.savetxt('Visualization/pred_data/' + name + '-PredOC.txt',point_set)
+
+#     ncent = cent_points.shape[0]
+#     cent_eh = dupli(ncent , cent_points)
+#     point_set = np.vstack((point_set, cent_points))
+#     point_set = np.vstack((point_set, cent_eh))
+#     point_set = np.vstack((point_set, cent_points))
+
+#     np.savetxt('Visualization/pred_data/' + name + '-PredFA.txt',point_set)
 
 def calfeatOC(name):
     '''
@@ -1164,30 +1109,27 @@ def calfeatOC(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-OC.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.23:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
-
-        cent,_ = kmeans(new_points[:, 0:3], 2)
+        cent,_ = kmeans(new_points, 2)
         cent = np.array(cent)
+        cent = closestPoint(cent , new_points)
     
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[0] = 1
+            r[2] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -1205,7 +1147,59 @@ def calfeatOC(name):
     point_set = np.vstack((point_set, cent_points))
     point_set = np.vstack((point_set, cent_eh))
     point_set = np.vstack((point_set, cent_points))
+
+    np.savetxt('Visualization/pred_data/' + name + '-featPointOC.txt',cent_points)
     np.savetxt('Visualization/pred_data/' + name + '-PredOC.txt',point_set)
+
+# def calfeatOC(name):
+#     '''
+#     带入segment信息进行分割
+#     '''
+#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-OC.txt')
+#     segdict = {}
+#     for p in point_set:
+#         if p[3] > 0.23:
+#             seg = int(p[4])
+#             if seg in segdict.keys():
+#                 segdict[seg].append(p)
+#             else:
+#                 segdict[seg] = []
+#                 segdict[seg].append(p)
+
+#     cent_points = np.empty(shape = (0 , 6))
+#     for key in segdict.keys():
+#         v = segdict[key]
+#         new_points = np.array(v)
+#         new_points = new_points[:, 0:3]
+
+#         n = new_points.shape[0]
+#         rgb = np.zeros(shape = (n , 3))
+#         new_points = np.hstack((new_points,rgb))
+
+#         cent,_ = kmeans(new_points[:, 0:3], 2)
+#         cent = np.array(cent)
+    
+#         rgb = np.zeros(shape = (cent.shape[0] , 3))
+#         for r in rgb:
+#             r[0] = 1
+#         cent = np.hstack((cent , rgb))
+#         cent_points = np.vstack((cent_points , cent))
+        
+#     point_set = point_set[:,0:3]
+#     N =point_set.shape[0]
+#     rgb = np.zeros(shape = (N , 3))
+#     for r in rgb:
+#         r[0] = 0.8
+#         r[1] = 0.8
+#         r[2] = 0.8
+#     point_set = np.hstack((point_set , rgb))
+
+#     ncent = cent_points.shape[0]
+#     cent_eh = dupli(ncent , cent_points)
+#     point_set = np.vstack((point_set, cent_points))
+#     point_set = np.vstack((point_set, cent_eh))
+#     point_set = np.vstack((point_set, cent_points))
+#     np.savetxt('Visualization/pred_data/' + name + '-PredOC.txt',point_set)
 
 def pc_normalize(pc):
     centroid = np.mean(pc, axis=0)
@@ -1239,6 +1233,8 @@ pre_mutex = 0
 heat_mutex = 0
 feat_mutex = 0
 
+LOAD = False
+
 class myThread (threading.Thread):
     def __init__(self, fileName_choose,name,point_set):
         threading.Thread.__init__(self)
@@ -1248,8 +1244,6 @@ class myThread (threading.Thread):
     def run(self):
         LoadThread(self.fileName_choose, self.name, self.point_set)
  
-
-
 def LoadThread(fileName_choose, name, point_set):
     # 加载模型
     '''MODEL LOADING'''
@@ -1534,7 +1528,8 @@ def checkheat():
     if pre_mutex == 1:
         global heat_mutex
         global pv
-        pv = pv + 1
+        if pv <= 90:   
+            pv = pv + 1
         ui.progressBar.setValue(pv)
         if heat_mutex == 1:      
             ui.timer3.stop()
@@ -1547,7 +1542,8 @@ def checkfeat():
     if heat_mutex == 1:
         global feat_mutex
         global pv
-        pv = pv + 1
+        if pv < 99:   
+            pv = pv + 1
         ui.progressBar.setValue(pv)
         if feat_mutex == 1:      
             global load_mutex 
@@ -1601,7 +1597,7 @@ def getTeethFile(self):
     
     ui.timer3.start(100)
     
-    ui.timer4.start(100)
+    ui.timer4.start(150)
 
     global TRAINED
     TRAINED = True

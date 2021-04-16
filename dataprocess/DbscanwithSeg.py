@@ -109,6 +109,128 @@ def kmeans(dataSet, k):
         
     return centroids, cluster
 
+# def calfeatCO(name):
+#     '''
+#     带入segment信息进行分割
+#     '''
+#     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
+#     segdict = {}
+#     for p in point_set:
+#         if p[3] > 0.20:
+#             seg = int(p[4])
+#             if seg in segdict.keys():
+#                 segdict[seg].append(p)
+#             else:
+#                 segdict[seg] = []
+#                 segdict[seg].append(p)
+
+#     cent_points = np.empty(shape = (0 , 6))
+#     for key in segdict.keys():
+#         v = segdict[key]
+#         new_points = np.array(v)
+#         new_points = new_points[:, 0:3]
+
+#         n = new_points.shape[0]
+#         rgb = np.zeros(shape = (n , 3))
+#         new_points = np.hstack((new_points,rgb))
+
+#         cent,_ = kmeans(new_points[:, 0:3], 2)
+#         cent = np.array(cent)
+    
+#         rgb = np.zeros(shape = (cent.shape[0] , 3))
+#         for r in rgb:
+#             r[0] = 1
+#         cent = np.hstack((cent , rgb))
+#         cent_points = np.vstack((cent_points , cent))
+        
+#     point_set = point_set[:,0:3]
+#     N =point_set.shape[0]
+#     rgb = np.zeros(shape = (N , 3))
+#     for r in rgb:
+#         r[0] = 0.5
+#         r[1] = 0.5
+#         r[2] = 0.5
+#     point_set = np.hstack((point_set , rgb))
+#     point_set = np.vstack((point_set, cent_points))
+
+#     ncent = cent_points.shape[0]
+#     cent_eh = np.zeros(shape = (ncent * 24 , 6))
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + i*ncent][0] = cent_points[j][0]
+#             cent_eh[j + i*ncent][1] = cent_points[j][1]
+#             cent_eh[j + i*ncent][2] = cent_points[j][2]
+#             cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
+#             cent_eh[j + i*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
+#             cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
+#             cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
+#             cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
+#             cent_eh[j + (3 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
+#             cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
+#             cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
+#             cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
+#             cent_eh[j + (6 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
+#             cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
+#             cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
+#             cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
+#             cent_eh[j + (9 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
+#             cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
+#             cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
+#             cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
+#             cent_eh[j + (12 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
+#             cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
+#             cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
+#             cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
+#             cent_eh[j + (15 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
+#             cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
+#             cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
+#             cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
+#             cent_eh[j + (18 + i)*ncent][3] = 1
+#     for i in range(3):
+#         for j in range(len(cent_points)):
+#             cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
+#             cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
+#             cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
+#             cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
+#             cent_eh[j + (21 + i)*ncent][3] = 1
+#     point_set = np.vstack((point_set, cent_points))
+#     point_set = np.vstack((point_set, cent_eh))
+
+#     np.savetxt('testkmeanCO.txt',cent_points)
+#     np.savetxt(name + '-PredCO.txt',point_set)
+def closestPoint(point , point_set):
+    n = point_set.shape[0]
+    point = point.reshape(-1,3)
+    cent = np.empty(shape=(0,3))
+    for p in point:
+        p = p.reshape(-1,3)
+        p = np.repeat(p, n , axis=0)   
+        dis = (point_set - p) * (point_set - p)
+        dis = np.sum(dis , axis=1)
+        dis = np.sqrt(dis)
+        i = np.argmin(dis)
+        cent_p = point_set[i]
+        cent = np.vstack((cent,cent_p))
+    return cent
+
 def calfeatCO(name):
     '''
     带入segment信息进行分割
@@ -116,26 +238,23 @@ def calfeatCO(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CO.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.20:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
-
-        cent,_ = kmeans(new_points[:, 0:3], 2)
+        cent,_ = kmeans(new_points, 2)
         cent = np.array(cent)
+        cent = closestPoint(cent , new_points)
     
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
@@ -153,66 +272,8 @@ def calfeatCO(name):
     point_set = np.hstack((point_set , rgb))
     point_set = np.vstack((point_set, cent_points))
 
-    ncent = cent_points.shape[0]
-    cent_eh = np.zeros(shape = (ncent * 24 , 6))
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + i*ncent][0] = cent_points[j][0]
-            cent_eh[j + i*ncent][1] = cent_points[j][1]
-            cent_eh[j + i*ncent][2] = cent_points[j][2]
-            cent_eh[j + i*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + i*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (3 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (3 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (3 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (3 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (3 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (6 + i)*ncent][0] = cent_points[j][0] + 0.1
-            cent_eh[j + (6 + i)*ncent][1] = cent_points[j][1] + 0.1
-            cent_eh[j + (6 + i)*ncent][2] = cent_points[j][2] + 0.1
-            cent_eh[j + (6 + i)*ncent][i] = cent_points[j][i] - 0.1
-            cent_eh[j + (6 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (9 + i)*ncent][0] = cent_points[j][0] - 0.1
-            cent_eh[j + (9 + i)*ncent][1] = cent_points[j][1] - 0.1
-            cent_eh[j + (9 + i)*ncent][2] = cent_points[j][2] - 0.1
-            cent_eh[j + (9 + i)*ncent][i] = cent_points[j][i] + 0.1
-            cent_eh[j + (9 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (12 + i)*ncent][0] = cent_points[j][0]
-            cent_eh[j + (12 + i)*ncent][1] = cent_points[j][1]
-            cent_eh[j + (12 + i)*ncent][2] = cent_points[j][2]
-            cent_eh[j + (12 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (12 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (15 + i)*ncent][0] = cent_points[j][0] 
-            cent_eh[j + (15 + i)*ncent][1] = cent_points[j][1] 
-            cent_eh[j + (15 + i)*ncent][2] = cent_points[j][2] 
-            cent_eh[j + (15 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (15 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (18 + i)*ncent][0] = cent_points[j][0] + 0.05
-            cent_eh[j + (18 + i)*ncent][1] = cent_points[j][1] + 0.05
-            cent_eh[j + (18 + i)*ncent][2] = cent_points[j][2] + 0.05
-            cent_eh[j + (18 + i)*ncent][i] = cent_points[j][i] - 0.05
-            cent_eh[j + (18 + i)*ncent][3] = 1
-    for i in range(3):
-        for j in range(len(cent_points)):
-            cent_eh[j + (21 + i)*ncent][0] = cent_points[j][0] - 0.05
-            cent_eh[j + (21 + i)*ncent][1] = cent_points[j][1] - 0.05
-            cent_eh[j + (21 + i)*ncent][2] = cent_points[j][2] - 0.05
-            cent_eh[j + (21 + i)*ncent][i] = cent_points[j][i] + 0.05
-            cent_eh[j + (21 + i)*ncent][3] = 1
     point_set = np.vstack((point_set, cent_points))
-    point_set = np.vstack((point_set, cent_eh))
+    # point_set = np.vstack((point_set, cent_eh))
 
     np.savetxt('testkmeanCO.txt',cent_points)
     np.savetxt(name + '-PredCO.txt',point_set)
@@ -224,37 +285,34 @@ def calfeatCU(name):
     point_set = np.loadtxt('Visualization/pred_data/'+ name + '-CU.txt')
     segdict = {}
     for p in point_set:
-        if p[3] > 0.25:
-            seg = int(p[4])
-            if seg in segdict.keys():
-                segdict[seg].append(p)
-            else:
-                segdict[seg] = []
-                segdict[seg].append(p)
+        seg = int(p[4])
+        if seg in segdict.keys():
+            segdict[seg].append(p)
+        else:
+            segdict[seg] = []
+            segdict[seg].append(p)
 
     cent_points = np.empty(shape = (0 , 6))
     for key in segdict.keys():
         v = segdict[key]
-        new_points = np.array(v)
-        new_points = new_points[:, 0:3]
-
-        n = new_points.shape[0]
-        rgb = np.zeros(shape = (n , 3))
-        new_points = np.hstack((new_points,rgb))
+        v = np.array(v)
+        new_points = v[v[:,3].argsort()]
+        new_points = new_points[-50:, 0:3]
 
         if key in [11,12,21,22]:
-            cent,_ = kmeans(new_points[:, 0:3], 3)
+            cent,_ = kmeans(new_points, 3)
         if key in [13,23]:
-            cent,_ = kmeans(new_points[:, 0:3], 1)
+            cent,_ = kmeans(new_points, 1)
         if key in [14,15,24,25]:
-            cent,_ = kmeans(new_points[:, 0:3], 2)
+            cent,_ = kmeans(new_points, 2)
         if key in [16,17,26,27]:
-            cent,_ = kmeans(new_points[:, 0:3], 4)
+            cent,_ = kmeans(new_points, 4)
         cent = np.array(cent)
-    
+        cent = closestPoint(cent , new_points)
+
         rgb = np.zeros(shape = (cent.shape[0] , 3))
         for r in rgb:
-            r[1] = 1
+            r[2] = 1
         cent = np.hstack((cent , rgb))
         cent_points = np.vstack((cent_points , cent))
         
@@ -262,9 +320,9 @@ def calfeatCU(name):
     N =point_set.shape[0]
     rgb = np.zeros(shape = (N , 3))
     for r in rgb:
-        r[0] = 0.5
-        r[1] = 0.5
-        r[2] = 0.5
+        r[0] = 0.8
+        r[1] = 0.8
+        r[2] = 0.8
     point_set = np.hstack((point_set , rgb))
     point_set = np.vstack((point_set, cent_points))
     np.savetxt('testkmeanCU.txt',cent_points)
@@ -459,5 +517,5 @@ def gt(name , feature):
 #     np.savetxt(name + '-PredCO.txt',point_set)
 
 if __name__ == '__main__':
-    calfeatCO('model_1')
-    gt('model_1' , 3)
+    calfeatCU('model_1')
+    gt('model_1' , 1)
