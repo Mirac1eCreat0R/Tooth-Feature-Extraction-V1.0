@@ -95,7 +95,7 @@ class TeethDataLoader(Dataset):
 if __name__ == '__main__':
     import torch
 
-    data = TeethDataLoader('E:/github/Teeth-pytorch/data/teeth_data_4096_withSeg/',split='train', uniform=False, normal_channel=False)
+    data = TeethDataLoader('data_1000/teeth_data_4096_withSeg/',split='train', uniform=False, normal_channel=False)
     DataLoader = torch.utils.data.DataLoader(data, batch_size=12, shuffle=True)
     for point,target,model_name, point_label, m, centroid in DataLoader:
         print(vert2matrix(point_label))

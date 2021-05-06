@@ -1248,7 +1248,7 @@ def LoadThread(fileName_choose, name, point_set):
     # 加载模型
     '''MODEL LOADING'''
 
-    MODEL = importlib.import_module('all_teeth_ver11')
+    MODEL = importlib.import_module('all_teeth_ver07')
     # classifier = MODEL.get_model().cuda()
     classifierCO = MODEL.get_model(14)
     checkpointCO = torch.load('log/latest_modelCO.pth')
@@ -1440,7 +1440,7 @@ def LoadThread(fileName_choose, name, point_set):
 #         log_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' : Loading Model'
 #         self.sinOut.emit(log_str,20)
             
-#         MODEL = importlib.import_module('all_teeth_ver01')
+#         MODEL = importlib.import_module('all_teeth_ver07')
 #         # classifier = MODEL.get_model().cuda()
 #         classifier = MODEL.get_model()
 #         checkpoint = torch.load('log/best_model2.pth')   
@@ -1610,7 +1610,7 @@ def getTeethFile(self):
     # ui.textEdit.append(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' : Loading Model')
     # #加载模型
     # '''MODEL LOADING'''
-    # MODEL = importlib.import_module('all_teeth_ver01')
+    # MODEL = importlib.import_module('all_teeth_ver07')
     # global classifier
     # # classifier = MODEL.get_model().cuda()
     # classifier = MODEL.get_model()

@@ -29,7 +29,7 @@ def generateHeat(feature, in_file, out_file):
 
 if __name__ == '__main__':
     feature = 0
-    in_file = 'Visualization/pred_data/model_1-OC.txt'
-    # in_file = 'data_1000/teeth_data_4096_withSeg_RBF_Single/model_1.txt'
+    # in_file = 'Visualization/pred_data/model_1-OC.txt'
+    in_file = 'data_1000/teeth_data_4096_withSeg_RBF_Single_new/model_76.txt'
     out_file = '1.txt'
     generateHeat(feature, in_file, out_file)

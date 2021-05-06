@@ -182,6 +182,16 @@ def main(args):
     #     log_string('No existing model, starting training from scratch...')
     #     start_epoch = 0
 
+    def weights_init(m): # 参数初始化
+        classname = m.__class__.__name__
+        if classname.find('Conv2d') != -1:
+            torch.nn.init.xavier_normal_(m.weight.data)
+            torch.nn.init.constant_(m.bias.data, 0.0)
+        elif classname.find('Linear') != -1:
+            torch.nn.init.xavier_normal_(m.weight.data)
+            torch.nn.init.constant_(m.bias.data, 0.0)
+        
+
     try:
         checkpoint = torch.load('./log/temp_checkpoint/best_modelCU.pth')
         start_epoch = checkpoint['epoch']
@@ -190,6 +200,7 @@ def main(args):
     except:
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
+        classifier = classifier.apply(weights_init)
     
     
 

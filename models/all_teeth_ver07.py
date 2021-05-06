@@ -2,7 +2,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 from pointnet_util import PointNetSetAbstractionMsg, PointNetSetAbstraction, PointNetFeaturePropagation
-from pointnet import PointNetEncoder, feature_transform_reguliarzer
 
 '''
 feature_extract
@@ -11,7 +10,7 @@ feature_extract
 直接把label当先验输入
 缩小网络层次 减小参数量和显存压力
 在全连接每次都contact label
-v1.1对应网络输入点为4096
+v0.7对应网络输入点为4096
 只预测一类关键点heatmap
 '''
 

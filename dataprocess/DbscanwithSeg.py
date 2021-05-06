@@ -517,5 +517,5 @@ def gt(name , feature):
 #     np.savetxt(name + '-PredCO.txt',point_set)
 
 if __name__ == '__main__':
-    calfeatCU('model_1')
-    gt('model_1' , 1)
+    # calfeatCU('model_1')
+    gt('model_76' , 1)
